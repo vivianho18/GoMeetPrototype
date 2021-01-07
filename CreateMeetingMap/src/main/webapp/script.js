@@ -53,9 +53,12 @@ function createMarkerForEdit(lat, lng) {
  * button.
  */
 function buildInfoWindowInput(lat, lng) {
+  const prompt = document.createElement('span');
+  prompt.innerText = "Enter location title:"
+
   const textBox = document.createElement('textarea');
   const button = document.createElement('button');
-  button.appendChild(document.createTextNode('Submit'));
+  button.appendChild(document.createTextNode('CONFIRM'));
 
   button.onclick = () => {
     createMarkerForDisplay(lat, lng, textBox.value);
@@ -63,6 +66,8 @@ function buildInfoWindowInput(lat, lng) {
   };
 
   const containerDiv = document.createElement('div');
+  containerDiv.appendChild(prompt);
+  containerDiv.appendChild(document.createElement('br'));
   containerDiv.appendChild(textBox);
   containerDiv.appendChild(document.createElement('br'));
   containerDiv.appendChild(button);
