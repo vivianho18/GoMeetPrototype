@@ -7,13 +7,13 @@ let editMarker;
 function createMap() {
   map = new google.maps.Map(
       document.getElementById('map'),
-      {center: {lat: 38.5949, lng: -94.8923}, zoom: 4});
+      {center: {lat: -33.8688, lng: 151.2093}, zoom: 12});
 
   // When the user clicks in the map, show a marker with a text box the user can
   // edit.
   map.addListener('click', (event) => {
     createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
-  });
+  }); 
 }
 
 /** Creates a marker that shows a read-only info window when clicked. */
@@ -21,7 +21,20 @@ function createMarkerForDisplay(lat, lng, content) {
   const marker =
       new google.maps.Marker({position: {lat: lat, lng: lng}, map: map});
 
-  const infoWindow = new google.maps.InfoWindow({content: content});
+  const contentString = 
+  '<div id="content">' +
+    '<div id="locationInfo">' +
+    "</div>" +
+    '<p> Location Title: </p>' +
+    content + 
+    '<div id="bodyContent">' +
+    "<p>Number of Votes: 1</br>" +
+    "Voters: You</br></p>" +
+    "<button>VOTE</button><br/><br/>"
+    "</div>" +
+    "</div>";
+
+  const infoWindow = new google.maps.InfoWindow({content: contentString});
   marker.addListener('click', () => {
     infoWindow.open(map, marker);
   });
