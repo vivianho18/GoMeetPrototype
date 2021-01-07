@@ -14,17 +14,6 @@ function createMap() {
   map.addListener('click', (event) => {
     createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
   });
-
-  fetchMarkers();
-}
-
-/** Fetches markers from the backend and adds them to the map. */
-function fetchMarkers() {
-  fetch('/markers').then(response => response.json()).then((markers) => {
-    markers.forEach(
-        (marker) => {
-            createMarkerForDisplay(marker.lat, marker.lng, marker.content)});
-  });
 }
 
 /** Creates a marker that shows a read-only info window when clicked. */
@@ -36,16 +25,6 @@ function createMarkerForDisplay(lat, lng, content) {
   marker.addListener('click', () => {
     infoWindow.open(map, marker);
   });
-}
-
-/** Sends a marker to the backend for saving. */
-function postMarker(lat, lng, content) {
-  const params = new URLSearchParams();
-  params.append('lat', lat);
-  params.append('lng', lng);
-  params.append('content', content);
-
-  fetch('/markers', {method: 'POST', body: params});
 }
 
 /** Creates a marker that shows a textbox the user can edit. */
@@ -79,7 +58,6 @@ function buildInfoWindowInput(lat, lng) {
   button.appendChild(document.createTextNode('Submit'));
 
   button.onclick = () => {
-    postMarker(lat, lng, textBox.value);
     createMarkerForDisplay(lat, lng, textBox.value);
     editMarker.setMap(null);
   };
